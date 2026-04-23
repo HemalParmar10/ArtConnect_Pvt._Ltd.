@@ -1,0 +1,72 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: notification-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/notification_service_db
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  main:
+    allow-bean-definition-overriding: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: hemalparmar0001@gmail.com       
+    password: socqkfkixeonblni           
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        connectiontimeout: 5000
+        timeout: 5000
+        writetimeout: 5000
+
+# Eureka - service discovery
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# JWT - must match all other services
+jwt:
+  secret: my-super-secret-key-which-is-at-least-32-bytes-long
+
+# Notification email sender address
+notification:
+  mail:
+    from: hemalparmar0001@gmail.com            
+
+logging:
+  level:
+    org.springframework.mail: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
+    org.hibernate.SQL: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
